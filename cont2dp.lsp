@@ -1,0 +1,8 @@
+(defun c:2dpc (/ poly pt endpt)
+  (setq poly (car (nentsel "\nSelect a polyline: ")))
+  (setq pt (vlax-curve-getClosestPointTo (vlax-ename->vla-object poly) (getpoint "\nSelect start point for new polyline: ")))
+  (setq endpt (getpoint pt "\nSelect endpoint to continue drawing polyline: "))
+  (command "_.PLINE" pt endpt "")
+  (setq newpoly (entlast))
+  (command "_.PEDIT" newpoly "_join" poly "")
+)
